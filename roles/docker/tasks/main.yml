@@ -1,0 +1,8 @@
+---
+- name: Set up Docker
+  ansible.builtin.import_tasks: setup.yml
+  tags: setup
+
+- name: Test Docker
+  ansible.builtin.import_tasks: test.yml
+  tags: test

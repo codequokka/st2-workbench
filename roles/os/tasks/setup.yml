@@ -1,0 +1,19 @@
+---
+- name: Fail if OS version is not supported
+  ansible.builtin.fail:
+    msg: "{{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_major_version'] }} is currently not supported"
+  when:
+    - ansible_facts['distribution'] != "Rocky" or ansible_facts['distribution_major_version'] != "8"
+
+- name: Create a group
+  ansible.builtin.group:
+    name: "{{ group }}"
+    state: present
+
+- name: Create a user
+  ansible.builtin.user:
+    name: "{{ user }}"
+    group: "{{ group }}"
+    password: "{{ password | password_hash('sha512') }}"
+    state: present
+  changed_when: false

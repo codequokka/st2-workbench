@@ -1,0 +1,5 @@
+---
+user: usagi
+group: "{{ user }}"
+password: Us@gi
+# public_key:

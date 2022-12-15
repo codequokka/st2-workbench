@@ -1,0 +1,12 @@
+---
+- name: Execute the command with a created user
+  ansible.builtin.command:
+    cmd: id
+  register: _result
+  become: true
+  become_user: "{{ user }}"
+  changed_when: false
+
+- name: Show result of the command
+  ansible.builtin.debug:
+    msg: "{{ _result.stdout }}"
