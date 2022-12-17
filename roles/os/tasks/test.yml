@@ -1,22 +1,23 @@
 ---
 - name: Check the user created exists and that user can execute a command
   ansible.builtin.command:
-    cmd: id
+    cmd: "{{ item }}"
   become: true
   become_user: "{{ user }}"
   register: _result
+  with_items:
+    - /bin/bash -lc id
   changed_when: false
 
 - name: Show the result of the excuted command
   ansible.builtin.debug:
-    msg: "{{ _result.stdout }}"
+    msg: "{{ _result.results[0].stdout }}"
 
-- name: Check the user created exists and that user can execute a copied command
+- name: Check the user created can execute a copied command
   ansible.builtin.command:
     cmd: "{{ item }}"
   become: true
   become_user: "{{ user }}"
   with_items:
-    - /usr/local/bin/direnv version
-    # - source ~/.bashrc && direnv version
+    - /bin/bash -lc direnv version
   changed_when: false

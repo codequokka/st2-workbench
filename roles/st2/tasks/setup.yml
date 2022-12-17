@@ -9,7 +9,7 @@
 - name: Clone a git repo
   ansible.builtin.git:
     repo: "https://github.com/codequokka/st2-docker"
-    dest: /home/{{ user }}/st2-docker
+    dest: /home/{{ user }}/st2/st2-docker
     version: customize
     depth: 1
   become: true
@@ -24,14 +24,15 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0755
+    recurse: true
   with_items:
-    - /home/{{ user }}/packs.dev
+    - /home/{{ user }}/st2/packs.dev
 
-# - name: Start ST2 containers
-#   ansible.builtin.command:
-#     cmd: /usr/local/bin/docker-compose up -d
-#     chdir: /home/{{ user }}/st2-docker
-#   become: true
-#   become_user: "{{ user }}"
-#   changed_when: false
+- name: Start ST2 containers
+  ansible.builtin.command:
+    cmd: /usr/local/bin/docker-compose up -d
+    chdir: /home/{{ user }}/st2/st2-docker
+  become: true
+  become_user: "{{ user }}"
+  changed_when: false
 
