@@ -1,5 +1,5 @@
 ---
-- name: Set up Stackstorm testbench
+- name: Set up the Stackstorm workbench host
   hosts: localhost
   become: true
   roles:
@@ -11,27 +11,3 @@
 
     - role: st2
       tags: st2
-
-    # - role: git
-    #   tags: git
-
-    # - role: tmux
-    #   tags: tmux
-
-    # - role: zsh
-    #   tags: zsh
-
-    # - role: nvim
-    #   tags: nvim
-
-    # - role: vscode
-    #   tags: vscode
-
-    # - role: docker
-    #   tags: docker
-
-    # - role: python3
-    #   tags: python3
-
-    # - role: ansible
-    #   tags: ansible

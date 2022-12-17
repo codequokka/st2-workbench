@@ -1,15 +1,24 @@
 ---
-- name: Fail if OS version is not supported
+- name: Fail if the OS version is not supported
   ansible.builtin.fail:
-    msg: "{{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_major_version'] }} is currently not supported"
+    msg:
+      - This OS version is currently not supported.
+      - "{{ ansible_facts['distribution'] }}"
+      - "{{ ansible_facts['distribution_major_version'] }}"
+      - "{{ ansible_facts['architecture'] }}"
   when:
-    - ansible_facts['distribution'] != "Rocky" or ansible_facts['distribution_major_version'] != "8"
+    - ansible_facts['distribution'] != "Rocky" or
+      ansible_facts['distribution_major_version'] != "8" or
+      ansible_facts['architecture'] != "x86_64"
 
 - name: Create a group
   ansible.builtin.group:
     name: "{{ group }}"
     state: present
 
+# This task is not an idempotent,
+# because the password_hash function will input a different Salt each time
+# then generate a different hash value each time.
 - name: Create a user
   ansible.builtin.user:
     name: "{{ user }}"
@@ -28,14 +37,14 @@
   with_items:
     - direnv
 
-- name: Update bashrc with a created user
-  blockinfile:
+- name: Update a bashrc
+  ansible.builtin.blockinfile:
     dest: /home/{{ user }}/.bashrc
     insertafter: EOF
     content: |
       . ~/.bashrc.local
 
-- name: Copy bashrc files
+- name: Copy a bashrc.local
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: /home/{{ user }}/.{{ item }}
