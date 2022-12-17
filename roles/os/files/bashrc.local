@@ -1,2 +1,8 @@
+# ST2
+export ST2_PACKS_DEV=~/st2/packs.dev
+
 # Direnv
-# eval "$(direnv hook bash)"
+eval "$(direnv hook bash)"
+
+# Starship
+eval "$(starship init bash)"
