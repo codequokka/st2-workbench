@@ -1,6 +1,6 @@
 ---
 user: usagi
 group: "{{ user }}"
-password: Us@gi
+password: usagi
 
 st2_docker_repo: "https://github.com/codequokka/st2-docker"
