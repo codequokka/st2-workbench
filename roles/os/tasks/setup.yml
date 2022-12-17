@@ -1,16 +1,4 @@
 ---
-- name: Fail if the OS version is not supported
-  ansible.builtin.fail:
-    msg:
-      - This OS version is currently not supported.
-      - "{{ ansible_facts['distribution'] }}"
-      - "{{ ansible_facts['distribution_major_version'] }}"
-      - "{{ ansible_facts['architecture'] }}"
-  when:
-    - ansible_facts['distribution'] != "Rocky" or
-      ansible_facts['distribution_major_version'] != "8" or
-      ansible_facts['architecture'] != "x86_64"
-
 - name: Create a group
   ansible.builtin.group:
     name: "{{ group }}"
@@ -27,12 +15,22 @@
     state: present
   changed_when: false
 
+- name: Create a bin dir
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0700
+  with_items:
+    - /home/{{ user }}/.local/bin
+
 - name: Copy bin files
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: /usr/local/bin/{{ item }}
-    owner: root
-    group: root
+    dest: /home/{{ user }}/.local/bin/{{ item }}
+    owner: "{{ user }}"
+    group: "{{ user }}"
     mode: 0755
   with_items:
     - direnv

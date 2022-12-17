@@ -2,6 +2,19 @@
 - name: Set up the Stackstorm workbench host
   hosts: localhost
   become: true
+  pre_tasks:
+    - name: Fail if the OS version is not supported
+      ansible.builtin.fail:
+        msg:
+          - This OS version is not currently supported.
+          - "{{ ansible_facts['distribution'] }}"
+          - "{{ ansible_facts['distribution_major_version'] }}"
+          - "{{ ansible_facts['architecture'] }}"
+      when:
+        - ansible_facts['distribution'] != "Rocky" or
+          ansible_facts['distribution_major_version'] != "8" or
+          ansible_facts['architecture'] != "x86_64"
+
   roles:
     - role: os
       tags: os
