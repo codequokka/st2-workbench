@@ -17,3 +17,30 @@
     password: "{{ password | password_hash('sha512') }}"
     state: present
   changed_when: false
+
+- name: Copy bin files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /usr/local/bin/{{ item }}
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - direnv
+
+- name: Update bashrc with a created user
+  blockinfile:
+    dest: /home/{{ user }}/.bashrc
+    insertafter: EOF
+    content: |
+      . ~/.bashrc.local
+
+- name: Copy bashrc files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /home/{{ user }}/.{{ item }}
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0644
+  with_items:
+    - bashrc.local

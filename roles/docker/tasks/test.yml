@@ -1,9 +1,9 @@
 ---
 - name: Check the commands exists with a created user
   ansible.builtin.command: "{{ item }}"
+  become: true
+  become_user: "{{ user }}"
   with_items:
     - docker version
     - /usr/local/bin/docker-compose version
-  become: true
-  become_user: "{{ user }}"
   changed_when: false

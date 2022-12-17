@@ -10,3 +10,12 @@
 - name: Show result of the command
   ansible.builtin.debug:
     msg: "{{ _result.stdout }}"
+
+- name: Check the commands exist with a created user
+  ansible.builtin.command: "{{ item }}"
+  become: true
+  become_user: "{{ user }}"
+  with_items:
+    - /usr/local/bin/direnv version
+  changed_when: false
+

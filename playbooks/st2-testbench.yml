@@ -9,8 +9,8 @@
     - role: docker
       tags: docker
 
-    # - role: ssh
-    #   tags: ssh
+    - role: st2
+      tags: st2
 
     # - role: git
     #   tags: git

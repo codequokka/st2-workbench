@@ -1,0 +1,11 @@
+---
+# - name: Install NvChad
+#   ansible.builtin.git:
+#     repo: "https://github.com/StackStorm/st2-docker"
+#     dest: /home/{{ user }}/st2-docker
+#     depth: 1
+#     update: false
+#   become: true
+#   become_user: "{{ user }}"
+#   tags:
+#     - skip_ansible_lint

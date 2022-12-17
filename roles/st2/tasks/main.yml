@@ -1,0 +1,8 @@
+---
+- name: Set up Stackstorm
+  ansible.builtin.import_tasks: setup.yml
+  tags: setup
+
+- name: Test Stackstorm
+  ansible.builtin.import_tasks: test.yml
+  tags: test
