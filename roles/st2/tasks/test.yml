@@ -1,4 +1,13 @@
 ---
+- name: Check the user created can execute a installed command
+  ansible.builtin.command:
+    cmd: "{{ item }}"
+  become: true
+  become_user: "{{ user }}"
+  with_items:
+    - /bin/bash -lc "st2 --version"
+  changed_when: false
+
 - name: Check ST2 ports are open on the ST2 workbench host
   ansible.builtin.wait_for:
     port: "{{ item }}"
