@@ -40,9 +40,9 @@
 - name: Copy bin files
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: /usr/local/bin/{{ item }}
-    owner: root
-    group: root
+    dest: /home/{{ user }}/.local/bin/{{ item }}
+    owner: "{{ user }}"
+    group: "{{ group }}"
     mode: 0755
   with_items:
     - docker-compose

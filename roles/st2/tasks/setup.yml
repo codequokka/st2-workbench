@@ -6,9 +6,23 @@
     - python38
     - python38-pip
 
+- name: Install pip packages
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    executable: pip3.8
+  with_items:
+    - st2client
+
+- name: Create symblic links
+  ansible.builtin.file:
+    src: /usr/local/bin/{{ item }}
+    dest: /home/{{ user }}/.local/bin/{{ item }}
+  with_items:
+    - st2
+
 - name: Clone a git repo
   ansible.builtin.git:
-    repo: "https://github.com/codequokka/st2-docker"
+    repo: "{{ st2_docker_repo }}"
     dest: /home/{{ user }}/st2/st2-docker
     version: customize
     depth: 1
@@ -28,11 +42,11 @@
   with_items:
     - /home/{{ user }}/st2/packs.dev
 
-- name: Start ST2 containers
-  ansible.builtin.command:
-    cmd: /usr/local/bin/docker-compose up -d
-    chdir: /home/{{ user }}/st2/st2-docker
-  become: true
-  become_user: "{{ user }}"
-  changed_when: false
+# - name: Start ST2 containers
+#   ansible.builtin.command:
+#     cmd: /bin/bash -lc docker-compose up -d
+#     chdir: /home/{{ user }}/st2/st2-docker
+#   become: true
+#   become_user: "{{ user }}"
+#   changed_when: false
 

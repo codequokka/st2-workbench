@@ -20,7 +20,7 @@
     path: "{{ item }}"
     state: directory
     owner: "{{ user }}"
-    group: "{{ user }}"
+    group: "{{ group }}"
     mode: 0700
   with_items:
     - /home/{{ user }}/.local/bin
@@ -34,6 +34,7 @@
     mode: 0755
   with_items:
     - direnv
+    - starship
 
 - name: Update a bashrc
   ansible.builtin.blockinfile:
@@ -51,3 +52,9 @@
     mode: 0644
   with_items:
     - bashrc.local
+
+- name: Set a authorized key
+  ansible.posix.authorized_key:
+    user: "{{ user }}"
+    key: "{{ public_key }}"
+    state: present

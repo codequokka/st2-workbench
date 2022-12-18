@@ -20,4 +20,5 @@
   become_user: "{{ user }}"
   with_items:
     - /bin/bash -lc direnv version
+    - /bin/bash -lc "starship --version"
   changed_when: false
