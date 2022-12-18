@@ -1,6 +1,6 @@
 ---
 - name: Set up the Stackstorm workbench host
-  hosts: localhost
+  hosts: st2_workbench
   become: true
   pre_tasks:
     - name: Fail if the OS version is not supported
