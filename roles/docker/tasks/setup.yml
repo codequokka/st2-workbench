@@ -29,7 +29,7 @@
   with_items:
     - docker
 
-- name: Add users to docker group
+- name: Add a user to docker group
   ansible.builtin.user:
     name: "{{ item }}"
     groups: docker
