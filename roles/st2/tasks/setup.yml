@@ -17,6 +17,7 @@
   ansible.builtin.file:
     src: /usr/local/bin/{{ item }}
     dest: /home/{{ user }}/.local/bin/{{ item }}
+    state: link
   with_items:
     - st2
 
