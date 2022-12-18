@@ -9,7 +9,7 @@
 - name: Install pip packages
   ansible.builtin.pip:
     name: "{{ item }}"
-    executable: pip3.8
+    executable: /usr/bin/pip3.8
   with_items:
     - st2client
 

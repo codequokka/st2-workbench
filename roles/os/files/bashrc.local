@@ -1,6 +1,9 @@
 # ST2
 export ST2_PACKS_DEV=~/st2/packs.dev
 
+# Pipenv
+export PIPENV_VENV_IN_PROJECT=1
+
 # Direnv
 eval "$(direnv hook bash)"
 
